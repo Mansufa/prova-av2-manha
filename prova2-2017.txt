@@ -1,0 +1,91 @@
+Unilasalle-RJ - AV2
+Aluno: Fellipe Mansur Ramos de Pinho 0050013136
+Prova Av2 de Laboratorio de Sistemas Operacionais
+Professor: Alex Salgado
+1o. Semestre de 2017   Turno: Manha
+--------------------------------------------------
+1-Faça um script shell que:
+- Pergunte por um nome e crie uma pasta e um arquivo.txt com o mesmo nome inserido.
+
+2-Quantos erros tem no script abaixo? Qual(is) são eles?
+case "$file" in
+    *.txt}
+        echo "É um arquivo de texto."
+        cat "$file"
+        
+    *.gif|*.jpg|*.png}
+        echo "É uma figura."
+        xloadimage "$file"
+        
+    *}
+        echo "Não sei que arquivo é esse."
+        
+esac
+
+3-Usando estrutura de repetição, faça um script para exibir todos os arquivos
+da pasta atual com tamanho maior que 500kb.
+
+4-Usando estrutura de repetição, faça um script para calcular e exibir quantas
+pastas e quantos arquivos tem na pasta atual.
+
+5-Faça um script que leia um numero IP e retorna se endereço responde ou não ao 
+comando ping.
+Além disso, se for digitado um ip vazio, o script deve informar ao usuario.
+
+Respostas aqui:
+1-#!/bin/bash
+
+echo "insira um nome para criar uma pasta"
+read name
+mkdir $name
+touch $name.txt
+
+2-6 erros. O script não há as condições do case, "X)"
+e tambem não há as terminações de cada opção, ";;"
+
+3-for arq in *.*
+do
+  tam=$(wc -c <"$arq")
+  minimo=500000
+  if [ $tam -ge $minimo ]; then
+    echo $arq
+  fi
+done
+
+4-#!/bin/bash
+
+dir=0
+arquivos=0
+for item in *
+do
+  if [ -d $item ]
+  then
+    dir=$(($dir+1))
+  else
+    arquivos=$(($arquivos+1))
+  fi
+done
+echo "Arquivos: $arquivos Diretorios: $dir"
+
+
+
+5- #!/bin/bash
+
+echo "informe a url: "	
+read url
+if [ -z $url ]; 
+then
+echo "URL vazia"
+else 
+	ping -q -c 5 $url
+		if [ $? -eq 0 ];
+then		
+			echo "a URL $URL está no ar"
+			echo " "
+			echo " "
+		else
+			echo "a URL $URL não está no ar"
+			echo " "
+			echo " "
+		fi
+fi
